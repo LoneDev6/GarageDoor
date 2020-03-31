@@ -28,7 +28,7 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - ** Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** (fixes game crash probably due unsupported bmp)
 
 ## Contributors
-- [LoneDev](https://github.com/LoneDev6 "LoneDev")
-- nosamu
-- TOMYSSHADOW
-- morgan
+- [LoneDev](https://github.com/LoneDev6 "LoneDev") (coding, reverse engineering)
+- nosamu (Director 6 scripting)
+- TOMYSSHADOW (Director 6 scripting)
+- morgan (Translations)
