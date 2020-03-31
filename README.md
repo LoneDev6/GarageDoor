@@ -18,3 +18,8 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Play the game and when you find an untraslated text the program will dump it and add it to the file `translation.ini`
 - Edit the file `translation.ini` (no need to restart or close the game) and translate the new text (default value `OOOOOOOO_TRANSLATE_ME_OOOOOOOOO`)
 - Be sure not to break the .ini file removing `=` symbol, `[Phrases] `and `[Settings]`
+
+## Contributors
+- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- nosamu
+- TOMYSSHADOW
