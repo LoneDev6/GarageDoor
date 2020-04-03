@@ -27,6 +27,10 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Export them to `.bmp `
 - ** Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** (fixes game crash probably due unsupported bmp)
 
+#### Intro
+- Intro texts are images stored in `dir_data\open.swf` file
+- You have to edit it file using an extractor like "Flash Decompiler Trillix"
+
 ## Contributors
 - [LoneDev](https://github.com/LoneDev6 "LoneDev") (coding, reverse engineering)
 - nosamu (Director 6 scripting)
