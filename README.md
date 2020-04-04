@@ -25,7 +25,7 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Use [gimp](https://www.gimp.org/downloads/ "gimp") to open my blank templates in `dir_data/assets`
 - Edit them with your better translations
 - Export them to `.bmp `
-- ** Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** (fixes game crash probably due unsupported bmp)
+- **Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** (fixes game crash probably due unsupported bmp)
 
 #### Intro
 - Intro texts are images stored in `dir_data\open.swf` file
