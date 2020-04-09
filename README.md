@@ -11,6 +11,14 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Translate text without restarting the game
 - Game textures injection
 
+### How to install
+- Download this repo
+- Paste the content into your Garage installation folder
+- Start the game
+
+Note: if you don't want to try the experimental textures translation (that can lead to crashes) don't copy and paste the `dir_data` folder
+
+
 ## How to contribute
 #### Texts
 - Clone the repo
@@ -22,10 +30,11 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - If you want you can submit a pull request so I can merge your translations with the main ones
 
 #### Textures
+Remember that this is experimental and may lead to crashes.
 - Use [gimp](https://www.gimp.org/downloads/ "gimp") to open my blank templates in `dir_data/assets`
 - Edit them with your better translations
 - Export them to `.bmp `
-- **Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** (fixes game crash probably due unsupported bmp)
+- **Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** with 8-bit setting (fixes game crash probably due unsupported bmp)
 
 #### Intro
 - Intro texts are images stored in `dir_data\open.swf` file
