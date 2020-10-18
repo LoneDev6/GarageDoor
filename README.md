@@ -12,8 +12,8 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Game textures injection
 
 ### How to install
-- Download this repo
-- Paste the content into your Garage installation folder
+- Download this repo .zip and the last .zip file from releases
+- Paste both .zip files contents into your Garage installation folder
 - Start the game
 
 Note: if you don't want to try the experimental textures translation (that can lead to crashes) don't copy and paste the `dir_data` folder
