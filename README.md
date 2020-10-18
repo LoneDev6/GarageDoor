@@ -11,10 +11,33 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Translate text without restarting the game
 - Game textures injection
 
-### How to install
+# 💿 How to install the game
+
+**Downloading & preparing the game for Windows OS**
+
+1. Download *garage.7z* at <https://archive.org/download/GarageBadDreamAdventure/garage.7z>
+2. Open *garage.7z* and move *garage.img.ecm* out of the compressed file.
+3. Download Universal Extractor 2 at <http://m.majorgeeks.com/mg/get/universal_extractor_2,1.html>
+4. Open *UniExtractRC3.zip* and move the UniExtract folder out of the compressed file
+5. Run *UniExtract.exe* and complete the setup
+6. Use UniExtract to extract *garage.img.ecm* & create *garage.img*
+7. Download WinCDEmu at <https://github.com/sysprogs/WinCDEmu/releases/download/v4.1/WinCDEmu-4.1.exe> and complete the installation setup
+8. Once setup is complete, right click on *garage.img*, click on "Select drive letter & mount" & click OK
+9. Find your CD Drive and open *CD Drive (?:) GARAGE*
+10. Highlight everything in the file, then copy & paste the files to a different uncompressed folder.
+
+**Changing the games aspect ratio for Windows OS (Optional)**
+
+16. Right click on *Garage.exe*
+17. Click on Properties
+18. Click on Compatibility
+19. Check the "Run in 640x480 screen resolution" & "Disable fullscreen optimizations" options
+20. Click Apply
+
+# 💾 How to install the patch
 - Download this repo .zip and the last .zip file from releases
 - Paste both .zip files contents into your Garage installation folder
-- Run LaunchGame.bat
+- Run `LaunchGame.bat`
 
 Note: if you don't want to try the **experimental textures** translation (that can lead to crashes) **don't copy** and paste the `dir_data` folder
 
