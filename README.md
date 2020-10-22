@@ -65,7 +65,16 @@ Remember that this is experimental and may lead to crashes.
 - You have to edit it file using an extractor like "Flash Decompiler Trillix"
 
 ## Contributors
-- [LoneDev](https://github.com/LoneDev6 "LoneDev") (coding, reverse engineering)
-- nosamu (Director 6 scripting)
-- TOMYSSHADOW (Director 6 scripting)
-- morgan (Translations)
+### 💻Development and reverse engineering
+- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+
+### 🎥Director 6 images patch
+- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- TOMYSSHADOW
+- nosamu
+
+### 📕Translations
+- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- [Morgan](https://www.youtube.com/channel/UClroPL_xY9RGlMbQJIMiiIw)
+- FELON
+- Saint
