@@ -31,7 +31,7 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Run `LaunchGame.bat`
 
 #### Note
-if you want to try the **experimental textures** translation (that can lead to crashes) download [this repo directly](https://github.com/LoneDev6/GarageDoor/archive/master.zip) and paste the `dir_data` folder inside your **Garage** installation folder
+if you want to try the **experimental textures** translation (that can lead to crashes) download [this repo directly](https://github.com/LoneDev6/GarageDoor/archive/master.zip), extract **Garage** folder and paste the `dir_data` folder inside your **Garage** installation folder
 
 **Changing the games aspect ratio for Windows OS (Optional)**
 
