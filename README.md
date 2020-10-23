@@ -26,6 +26,13 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 9. Find your CD Drive and open *CD Drive (?:) GARAGE*
 10. Highlight everything in the file, then copy & paste the files to a different uncompressed folder.
 
+# 💾 How to install the patch
+- Download [latest release .zip](https://github.com/LoneDev6/GarageDoor/releases/latest) and extract contents into your **Garage** installation folder
+- Run `LaunchGame.bat`
+
+#### Note
+if you want to try the **experimental textures** translation (that can lead to crashes) download [this repo directly](https://github.com/LoneDev6/GarageDoor/archive/master.zip) and paste the `dir_data` folder inside your **Garage** installation folder
+
 **Changing the games aspect ratio for Windows OS (Optional)**
 
 16. Right click on *Garage.exe*
@@ -33,13 +40,6 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 18. Click on Compatibility
 19. Check the "Run in 640x480 screen resolution" & "Disable fullscreen optimizations" options
 20. Click Apply
-
-# 💾 How to install the patch
-- Download this repo .zip and the last .zip file from releases
-- Paste both .zip files contents into your Garage installation folder
-- Run `LaunchGame.bat`
-
-Note: if you don't want to try the **experimental textures** translation (that can lead to crashes) **don't copy** and paste the `dir_data` folder
 
 
 ## How to contribute
