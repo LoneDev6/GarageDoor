@@ -79,7 +79,3 @@ Remember that this is experimental and may lead to crashes.
 - FELON
 - Saint
 
-
-##### Icon
-- [LoneDev](https://github.com/LoneDev6 "LoneDev")
-- [Vecteezy](https://www.vecteezy.com/free-vector/garage)
