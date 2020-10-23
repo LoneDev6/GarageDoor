@@ -78,3 +78,8 @@ Remember that this is experimental and may lead to crashes.
 - [Morgan](https://www.youtube.com/channel/UClroPL_xY9RGlMbQJIMiiIw)
 - FELON
 - Saint
+
+
+##### Icon
+- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- [Vecteezy](https://www.vecteezy.com/free-vector/garage)
