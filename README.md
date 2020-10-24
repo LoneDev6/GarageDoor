@@ -35,11 +35,11 @@ if you want to try the **experimental textures** translation (that can lead to c
 
 **Changing the games aspect ratio for Windows OS (Optional)**
 
-16. Right click on *Garage.exe*
-17. Click on Properties
-18. Click on Compatibility
-19. Check the "Run in 640x480 screen resolution" & "Disable fullscreen optimizations" options
-20. Click Apply
+1. Right click on *Garage.exe*
+2. Click on Properties
+3. Click on Compatibility
+4. Check the "Run in 640x480 screen resolution" & "Disable fullscreen optimizations" options
+5. Click Apply
 
 
 ## How to contribute
