@@ -4,6 +4,8 @@
 First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  ｢ガラージュ｣](https://lostmediaarchive.fandom.com/wiki/Garage:_Bad_Dream_Adventure_(Limited_Release_1999_Japanese_Point-and-Click_Game) "GARAGE: Bad Dream Adventure  ｢ガラージュ｣")
 
 
+[Join the Discord server](https://discord.gg/AWtvKs4)
+
 ### Features
 
 - Intercept and translate game text at runtime
