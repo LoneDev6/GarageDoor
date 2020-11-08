@@ -9,62 +9,62 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 ### Features
 
 - Intercept and translate game text at runtime
-- Dump text to a file at runtime
+- Dump game texts to a file at runtime
 - Translate text without restarting the game
-- Game textures injection
+- Game images recognition and replace at runtime
 
 # 💿 How to install the game
+1. Download a [preinstalled copy of Garage](https://mega.nz/file/IVkSXIhL#9VRrAMpZBww-voY6N8zvz4z29poUVlMGll3m6fPs2J4)
+2. Download [7zip](https://www.7-zip.org/download.html)
+3. Right click on `Garage_pre_installed.7z` and select `7zip->Extract in "Garage_pre_installed\"`
+Now you have the complete Japanese game extracted. Now read the next step.
 
-**Downloading & preparing the game for Windows OS**
+# 💾 How to install the english patch
+1. Download [latest GarageEnglishPatch zip](https://mega.nz/file/lQk0GSaS#C-RG8GDBECReG5KnPb5ZzTTZG8xUIK_Mkt1pbwoD7i8) and extract contents into your **Garage** installation folder
+2. Run `GarageOpener.exe`
 
-1. Download *garage.7z* at <https://archive.org/download/GarageBadDreamAdventure/garage.7z>
-2. Open *garage.7z* and move *garage.img.ecm* out of the compressed file.
-3. Download Universal Extractor 2 at <http://m.majorgeeks.com/mg/get/universal_extractor_2,1.html>
-4. Open *UniExtractRC3.zip* and move the UniExtract folder out of the compressed file
-5. Run *UniExtract.exe* and complete the setup
-6. Use UniExtract to extract *garage.img.ecm* & create *garage.img*
-7. Download WinCDEmu at <https://github.com/sysprogs/WinCDEmu/releases/download/v4.1/WinCDEmu-4.1.exe> and complete the installation setup
-8. Once setup is complete, right click on *garage.img*, click on "Select drive letter & mount" & click OK
-9. Find your CD Drive and open *CD Drive (?:) GARAGE*
-10. Highlight everything in the file, then copy & paste the files to a different uncompressed folder.
-
-# 💾 How to install the patch
-- Download [latest release .zip](https://github.com/LoneDev6/GarageDoor/releases/latest) and extract contents into your **Garage** installation folder
-- Run `LaunchGame.bat`
-
-#### Note
-if you want to try the **experimental textures** translation (that can lead to crashes) download [this repo directly](https://github.com/LoneDev6/GarageDoor/archive/master.zip), extract **Garage** folder and paste the `dir_data` folder inside your **Garage** installation folder
-
-**Changing the games aspect ratio for Windows OS (Optional)**
-
-1. Right click on *Garage.exe*
+### Changing the games aspect ratio for Windows OS (Optional)
+1. Right click on `Garage.exe`
 2. Click on Properties
 3. Click on Compatibility
 4. Check the "Run in 640x480 screen resolution" & "Disable fullscreen optimizations" options
 5. Click Apply
 
+-------
 
-## How to contribute
+# How to contribute
+###### Skip this if you're not interested
 #### Texts
-- **Clone** the repo
-- Download the last .zip file from releases
-- Copy and paste everything into your Garage game root folder (replace files if needed)
-- Run `LaunchGame.bat`
-- Play the game and when you find an untraslated text the program will dump it and add it to the file `translation.ini`
+- Run `GarageOpener.exe` and check `Developer/translator mode`
+- Play the game and when you find an untraslated text the program will copy it and add it to the file `translation.ini`
 - Edit the file `translation.ini` (no need to restart or close the game) and translate the new text (default value `NOT_TRANSLATED_TEXT`)
 - Be sure not to break the .ini file removing `=` symbol, `[Phrases] `and `[Settings]`
 - If you want you can submit a pull request so I can merge your translations with the main ones
 
-#### Textures (unstable)
-Remember that this is experimental and may lead to crashes.
-- Use [gimp](https://www.gimp.org/downloads/ "gimp") to open my blank templates in `dir_data/assets`
-- Edit them with your better translations
-- Export them to `.bmp `
-- **Open them with** [paint.net](https://www.getpaint.net/download.html "paint.net") and **save them back again** with 8-bit setting (fixes game crash probably due unsupported bmp)
+#### Images
+- open `assets_new` folder
+- create your own folder to organize everything better, for example name it `various`, or use the `unknown` folder which already exists.
+- take a COMPLETE screenshot of the scene, must be `642x482` PRECISELY with no X-Y shifting.
+- open it using `GIMP`, remove as much details as possible and keep only the details that caracterize the scene, to allow my tool to recognize that scene.
+- **IMPORTANT:** be sure not to keep the 1 pixel borders in the image (make them transparent), I mean the gray borders.
+- for this image you can use transparent or green (0, 255, 0) background, but transparent is better
+- save the png file
+- create a new folder inside your own folder (`various` or `unknown` or...) and call it `translated`
+- create a new png file with the same name of your previous file
+- edit the initial screenshot translating the parts you want
+- delete the useless parts which are not translated and keep only the texts areas
+- save it in the `translated` folder (as I said before it must have the same name as the first file)
+###### NOTES:
+1. if you set the game to run with lower colors please disable it in properties of `Garage.exe` file.
+2. this tool was highly tested and works on `Windows 10 19041.264`, I don't know if it works fine on other Windows versions. Tested on `i7 4790k CPU`.
+3. I know the image replace has 5-6ms of delay, don't report that since I cannot fix this 
+4. there is no need to restart the game each time you edit images. You can just switch back to the game and wait 30 seconds as the tool will rescan the folder for new or edited images.
 
 #### Intro
 - Intro texts are images stored in `dir_data\open.swf` file
 - You have to edit it file using an extractor like "Flash Decompiler Trillix"
+
+-------
 
 ## Contributors
 ### 💻Development and reverse engineering
