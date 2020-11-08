@@ -17,6 +17,7 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 1. Download a [preinstalled copy of Garage](https://mega.nz/file/IVkSXIhL#9VRrAMpZBww-voY6N8zvz4z29poUVlMGll3m6fPs2J4)
 2. Download [7zip](https://www.7-zip.org/download.html)
 3. Right click on `Garage_pre_installed.7z` and select `7zip->Extract in "Garage_pre_installed\"`
+
 Now you have the complete Japanese game extracted. Now read the next step.
 
 # 💾 How to install the english patch
