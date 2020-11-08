@@ -24,6 +24,8 @@ Now you have the complete Japanese game extracted. Now read the next step.
 1. Download [latest GarageEnglishPatch zip](https://mega.nz/file/lQk0GSaS#C-RG8GDBECReG5KnPb5ZzTTZG8xUIK_Mkt1pbwoD7i8) and extract contents into your **Garage** installation folder
 2. Run `GarageOpener.exe`
 
+![](https://i.imgur.com/Vcr7JJv.png)
+
 ### Changing the games aspect ratio for Windows OS (Optional)
 1. Right click on `Garage.exe`
 2. Click on Properties
