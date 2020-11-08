@@ -72,6 +72,7 @@ Now you have the complete Japanese game extracted. Now read the next step.
 - [LoneDev](https://github.com/LoneDev6 "LoneDev")
 
 ### 🎥Director 6 images patch
+###### (not used anymore by the patch)
 - [LoneDev](https://github.com/LoneDev6 "LoneDev")
 - TOMYSSHADOW
 - nosamu
