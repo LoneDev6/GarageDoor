@@ -21,7 +21,7 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 Now you have the complete Japanese game extracted. Now read the next step.
 
 # 💾 How to install the english patch
-1. Download [latest GarageEnglishPatch zip](https://mega.nz/file/lQk0GSaS#C-RG8GDBECReG5KnPb5ZzTTZG8xUIK_Mkt1pbwoD7i8) and extract contents into your **Garage** installation folder
+1. Download [latest GarageEnglishPatch zip](https://mega.nz/file/2twAFbjK#PYFXStpgZo0IGTHvilaR5Cyr6K5NWSDk_FJIXl4oRk0) and extract contents into your **Garage** installation folder
 2. Run `GarageOpener.exe`
 
 ![](https://i.imgur.com/Vcr7JJv.png)
