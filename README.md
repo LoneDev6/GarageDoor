@@ -21,12 +21,13 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 Now you have the complete Japanese game extracted. Now read the next step.
 
 # 💾 How to install the english patch
-1. Download [latest GarageEnglishPatch zip](https://mega.nz/file/lQk0GSaS#C-RG8GDBECReG5KnPb5ZzTTZG8xUIK_Mkt1pbwoD7i8) and extract contents into your **Garage** installation folder
-2. Run `GarageOpener.exe`
+1. Download [latest GarageEnglishPatch](https://mega.nz/file/AYFz0SoA#YogEOAiyr8BjK61xYrq2VyBIYl9e74xV05cP32-TanI)
+2. Extract contents into your **Garage** installation (right click on `GarageEnglishPatch.7z` and select `7zip->Extract in "Garage_pre_installed\"`)
+3. Run `GarageOpener.exe`
 
 ![](https://i.imgur.com/Vcr7JJv.png)
 
-### Changing the games aspect ratio for Windows OS (Optional)
+### Changing the games aspect ratio for Windows OS (optional, may cause issues)
 1. Right click on `Garage.exe`
 2. Click on Properties
 3. Click on Compatibility
@@ -73,11 +74,6 @@ Now you have the complete Japanese game extracted. Now read the next step.
 ### 💻Development and reverse engineering
 - [LoneDev](https://github.com/LoneDev6 "LoneDev")
 
-### 🎥Director 6 images patch
-###### (not used anymore by the patch)
-- [LoneDev](https://github.com/LoneDev6 "LoneDev")
-- TOMYSSHADOW
-- nosamu
 
 ### 📕Translations
 - [LoneDev](https://github.com/LoneDev6 "LoneDev")
@@ -85,3 +81,8 @@ Now you have the complete Japanese game extracted. Now read the next step.
 - FELON
 - Saint
 
+### 🎥Director 6 images patch
+###### (not used anymore by the patch)
+- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- TOMYSSHADOW
+- nosamu
