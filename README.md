@@ -13,6 +13,12 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Translate text without restarting the game
 - Game images recognition and replace at runtime
 
+# :warning:**Only compatible with**
+- Windows XP
+- Windows 7
+- Windows 8
+- Windows 10
+
 # 💿 How to install the game
 1. Download a [preinstalled copy of Garage](https://mega.nz/file/IVkSXIhL#9VRrAMpZBww-voY6N8zvz4z29poUVlMGll3m6fPs2J4)
 2. Download [7zip](https://www.7-zip.org/download.html)
