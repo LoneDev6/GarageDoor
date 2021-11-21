@@ -14,7 +14,6 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Game images recognition and replace at runtime
 
 # :warning:**Only compatible with**
-- Windows XP
 - Windows 7
 - Windows 8
 - Windows 10
