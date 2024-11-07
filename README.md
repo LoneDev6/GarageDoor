@@ -18,16 +18,24 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 - Windows 8
 - Windows 10
 
-# 💿 How to install the game
-1. Download a [preinstalled copy of Garage](https://mega.nz/file/IVkSXIhL#9VRrAMpZBww-voY6N8zvz4z29poUVlMGll3m6fPs2J4)
-2. Download [7zip](https://www.7-zip.org/download.html)
-3. Right click on `Garage_pre_installed.7z` and select `7zip->Extract in "Garage_pre_installed\"`
+# 💿 How to install the original game
 
-Now you have the complete Japanese game extracted. Now read the next step.
+1. Download [7zip](https://www.7-zip.org/download.html)
+2. Download and open [`garage.7z`](https://archive.org/download/GarageBadDreamAdventure/garage.7z)
+3. Extract `garage.img.ecm`
+4. Download [ECM Tools](https://archive.org/download/ECMToolsV1.0/ECM%20Tools%20v1.0.zip)
+5. Drag and drop `garage.img.ecm` into `unecm.exe`
+7. Wait the program to finish and obtain `garage.img` from the same folder
+8. Download [WinCDEmu Portable](https://wincdemu.sysprogs.org/portable/) and run it
+9. Drag and drop `garage.img` into the program
+10. Find the mounted virtual CD Drive in "*Computer*" and open "*CD Drive (D:) GARAGE*"
+11. Highlight everything in the file, then copy it to a new folder called `Garage` (you can create it anywhere you want)
+12. Click on "*Uninstall Driver*" and close **WinCDEmu**
+13. You can delete all previously downloaded files except the `Garage` folder
 
 # 💾 How to install the english patch
-1. Download [latest GarageEnglishPatch](https://mega.nz/file/NBkDFagI#_FTZ-RPG-bAafelRs0dnG7HmNL0FBTDYZcH-gI1N2JI)
-2. Extract contents into your **Garage** installation (right click on `GarageEnglishPatch.7z` and select `7zip->Extract in "Garage_pre_installed\"`)
+1. Download [latest GarageEnglishPatch](https://github.com/LoneDev6/GarageDoor/releases/download/0.0.3/GarageEnglishPatch_v1.0.1.7z) from the [releases](https://github.com/LoneDev6/GarageDoor/releases).
+2. Extract contents into the root of your **Garage** game folder
 3. Run `GarageOpener.exe`
 
 ![](https://i.imgur.com/Vcr7JJv.png)
