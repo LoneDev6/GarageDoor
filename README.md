@@ -55,9 +55,9 @@ This patch updates images at runtime.
 ## Requirements
 
 You need the following xtras:
-- BMP Import Export.x32
-- MIX32.X32
-- budapi.x32
+- `BMP Import Export.x32`
+- `MIX32.X32`
+- `budapi.x32`
 
 ## Translating Game Images
 
@@ -97,15 +97,15 @@ This logic work fine with any other **Director** game, but this was coded for <e
 
 ## Contributors
 ### 💻Development and reverse engineering
-- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- [LoneDev](https://github.com/LoneDev6)
 
 ### 📕Translations
-- [LoneDev](https://github.com/LoneDev6 "LoneDev")
+- [LoneDev](https://github.com/LoneDev6)
 - [Morgan](https://www.youtube.com/channel/UClroPL_xY9RGlMbQJIMiiIw)
 - FELON
 - Saint
 
 ### 🎥Director 6 images patch
-- [LoneDev](https://github.com/LoneDev6 "LoneDev")
-- [TOMYSSHADOW](https://github.com/tomysshadow "TOMYSSHADOW")
-- [nosamu](https://github.com/n0samu "nosamu")
+- [LoneDev](https://github.com/LoneDev6)
+- [TOMYSSHADOW](https://github.com/tomysshadow)
+- [nosamu](https://github.com/n0samu)
