@@ -1,4 +1,4 @@
-![](https://img.shields.io/github/stars/LoneDev6/GarageDoor.svg) ![](https://img.shields.io/github/forks/LoneDev6/GarageDoor.svg) ![](https://img.shields.io/github/issues/LoneDev6/GarageDoor.svg)
+![](https://img.shields.io/github/stars/LoneDev6/GarageDoor-legacy.svg) ![](https://img.shields.io/github/forks/LoneDev6/GarageDoor-legacy.svg) ![](https://img.shields.io/github/issues/LoneDev6/GarageDoor-legacy.svg)
 # GarageDoor
 
 First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  ｢ガラージュ｣](https://lostmediaarchive.fandom.com/wiki/Garage:_Bad_Dream_Adventure_(Limited_Release_1999_Japanese_Point-and-Click_Game) "GARAGE: Bad Dream Adventure  ｢ガラージュ｣")
@@ -34,7 +34,7 @@ First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  
 13. You can delete all previously downloaded files except the `Garage` folder
 
 # 💾 How to install the english patch
-1. Download [latest GarageEnglishPatch](https://github.com/LoneDev6/GarageDoor/releases/download/0.0.3/GarageEnglishPatch_v1.0.1.7z) from the [releases](https://github.com/LoneDev6/GarageDoor/releases).
+1. Download [latest GarageEnglishPatch](https://github.com/LoneDev6/GarageDoor-legacy/releases/download/0.0.3/GarageEnglishPatch_v1.0.1.7z) from the [releases](https://github.com/LoneDev6/GarageDoor-legacy/releases).
 2. Extract contents into the root of your **Garage** game folder
 3. Run `GarageOpener.exe`
 
