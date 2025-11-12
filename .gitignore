@@ -1,0 +1,5 @@
+gcc_win98/
+mingw32/
+out/
+*.o
+*.txt
