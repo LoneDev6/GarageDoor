@@ -9,7 +9,6 @@ on startMovie
   sendSprite(0, #delayedPatching)
 end
 
-
 on delayedPatching
   repeat with i = 1 to 5
     updateStage
@@ -65,18 +64,21 @@ on patchExternalCast castFile, castName, basePath
   
   repeat with i = 1 to 300
     set bmpPath = castFolder & "\\" & string(i) & ".bmp"
+    set txtPath = castFolder & "\\" & string(i) & ".txt"
+    
     if fileExists(bmpPath) = 1 then
-      if i <= the number of members of castLib castName then
-        replaceBitmap(member(i) of castLib castName, bmpPath)
-        set patchedCount = patchedCount + 1
-      end if
+      replaceBitmap(member(i) of castLib castName, bmpPath)
+      set patchedCount = patchedCount + 1
+    else if fileExists(txtPath) = 1 then
+      replaceField(member(i) of castLib castName, txtPath)
+      set patchedCount = patchedCount + 1
     end if
   end repeat
   
   if patchedCount = 0 then
     logMsg("No patches found for external cast: " & castName)
   else
-    logMsg("Patched " & string(patchedCount) & " bitmaps for external cast: " & castName)
+    logMsg("Patched " & string(patchedCount) & " members for external cast: " & castName)
   end if
 end
 
@@ -95,35 +97,39 @@ on patchInternalCast movieName, castIndex, castName, basePath
   
   repeat with i = 1 to 300
     set bmpPath = castFolder & string(castIndex) & "_" & string(i) & ".bmp"
+    set txtPath = castFolder & string(castIndex) & "_" & string(i) & ".txt"
+    
     if fileExists(bmpPath) = 1 then
-      if i <= the number of members of castLib castName then
-        replaceBitmap(member(i) of castLib castName, bmpPath)
-        set patchedCount = patchedCount + 1
-      end if
+      replaceBitmap(member(i) of castLib castName, bmpPath)
+      set patchedCount = patchedCount + 1
+    else if fileExists(txtPath) = 1 then
+      replaceField(member(i) of castLib castName, txtPath)
+      set patchedCount = patchedCount + 1
     end if
   end repeat
   
   if patchedCount = 0 then
     logMsg("No patches found for internal cast: " & castName)
   else
-    logMsg("Patched " & string(patchedCount) & " bitmaps for internal cast: " & castName)
+    logMsg("Patched " & string(patchedCount) & " members for internal cast: " & castName)
   end if
 end
 
+-----------------------------------------------
+-- REPLACEMENT LOGIC
+-----------------------------------------------
 on replaceBitmap bitmapMember, bitmapFileName
-  if the type of bitmapMember <> #bitmap then
-    exit
-  end if
-
+  if the type of bitmapMember <> #bitmap then exit
+  
   set regPointOld = the regPoint of bitmapMember
-
-  -- Create a new temporary member in cast 1
+  
+  -- Temporary import slot
   set total = the number of members of castLib 1
   new(#bitmap, castLib 1, total + 1)
   set tmpMember = member(total + 1) of castLib 1
-
+  
   importFileInto tmpMember, bitmapFileName
-
+  
   if the type of tmpMember = #bitmap then
     set the picture of bitmapMember = the picture of tmpMember
     set the regPoint of bitmapMember = regPointOld
@@ -134,6 +140,48 @@ on replaceBitmap bitmapMember, bitmapFileName
   end if
 end
 
+on replaceField fieldMember, textFileName
+  set t = the type of fieldMember
+  if t <> #field and t <> #text then exit
+
+  if baFileExists(textFileName) = 0 then
+    logMsg("File not found: " & textFileName)
+    exit
+  end if
+
+  set f = new(xtra "FileIO")
+  openFile(f, textFileName, 1)
+
+  if status(f) <> 0 then
+    logMsg("Error opening file: " & error(f, status(f)))
+    closeFile(f)
+    exit
+  end if
+
+  set textContent = readFile(f)
+  closeFile(f)
+
+  if voidp(textContent) or textContent = EMPTY then
+    logMsg("File is empty or unreadable: " & textFileName)
+    exit
+  end if
+
+  -- Clean and overwrite without recreating
+  -- TODO not sure if all of this is needed, probably only text is enough
+  set the text of fieldMember = EMPTY
+  set the editable of fieldMember = FALSE
+  set the textFont of fieldMember = "MS Gothic"
+  set the textSize of fieldMember = 12
+  set the textStyle of fieldMember = "plain"
+  set the foreColor of fieldMember = 0
+  set the backColor of fieldMember = 255
+  set the text of fieldMember = textContent
+
+  -- Not sure if needed to be honest, TODO test if it works without that
+  updateStage
+  puppetPalette 0
+  updateStage
+end
 
 -----------------------------------------------
 -- UTILITIES

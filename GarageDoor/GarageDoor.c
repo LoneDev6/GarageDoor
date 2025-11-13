@@ -11,9 +11,8 @@ Garage English Patch - Launcher & Injector (C version for XP compatibility)
 #include <string.h>
 #include <stdarg.h>
 
-#define MAX_DLLS 20
-
 BOOL g_debugConsoleEnabled = FALSE;
+BOOL g_useTranslationEnabled = TRUE;
 
 // Helper macro to pause or exit based on debug console setting
 #define PauseOrExit() do { \
@@ -24,12 +23,25 @@ BOOL g_debugConsoleEnabled = FALSE;
 	} \
 } while(0)
 
-// Load debug console setting from GarageDoor.ini
-void LoadDebugConsoleConfig()
+// Load configuration settings from GarageDoor.ini
+void LoadConfigSettings()
 {
 	char result[256] = "";
+	
+	// Load debug console setting
 	DWORD success = GetPrivateProfileStringA("Settings", "debug_console", "0", result, sizeof(result), ".\\GarageDoor.ini");
 	g_debugConsoleEnabled = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
+	
+	// Load translation DLL injection setting
+	ZeroMemory(result, sizeof(result));
+	success = GetPrivateProfileStringA("Settings", "use_old_translation", "1", result, sizeof(result), ".\\GarageDoor.ini");
+	g_useTranslationEnabled = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
+	
+	if (g_debugConsoleEnabled)
+	{
+		printf("[CONFIG] debug_console: %s\n", g_debugConsoleEnabled ? "enabled" : "disabled");
+		printf("[CONFIG] use_old_translation: %s\n", g_useTranslationEnabled ? "enabled" : "disabled");
+	}
 }
 
 void DebugPrintf(const char *format, ...)
@@ -76,7 +88,6 @@ BOOL SetPrivilege(HANDLE hToken, LPCTSTR Privilege, BOOL bEnablePrivilege)
 	return bRet;
 }
 
-// Just in case Windows ignores the compatibility flags for some reason, forcibly change resolution
 void ForceResolution640x480()
 {
     DEVMODEA devMode;
@@ -85,39 +96,18 @@ void ForceResolution640x480()
     devMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL;
     devMode.dmPelsWidth = 640;
     devMode.dmPelsHeight = 480;
-    devMode.dmBitsPerPel = 16;
+    devMode.dmBitsPerPel = 16; // Seems to be ignored for some reason
     
     LONG result = ChangeDisplaySettingsA(&devMode, CDS_FULLSCREEN);
     
     if (result == DISP_CHANGE_SUCCESSFUL)
     {
-        printf("[OK] Resolution forced to 640x480 16-bit\n");
+        printf("[OK] Resolution forced to 640x480\n");
     }
     else
     {
         fprintf(stderr, "[ERROR] Failed to change resolution: %ld\n", result);
     }
-}
-
-// This makes the Garage.exe process run with compatibility flags
-void ApplyCompatibilityFlags(const char *exePath)
-{
-	HKEY hKey;
-	const char *subKey = "Software\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Layers";
-	if (RegCreateKeyExA(HKEY_CURRENT_USER, subKey, 0, NULL, 0, KEY_SET_VALUE, NULL, &hKey, NULL) == ERROR_SUCCESS)
-	{
-		const char *flags;
-		// Windows XP uses a different format.
-		// Anyway it seems it totally ignores this when launching via GarageDoor.exe for some reason
-		// but not when launching the game via Garage.exe (useless as translation DLLs won't be injected)
-		if (IsWindowsXP())
-			flags = "256COLOR 640X480";
-		else
-			flags = "640X480 16BITCOLOR RUNASADMIN";
-		RegSetValueExA(hKey, exePath, 0, REG_SZ, (const BYTE *)flags, (DWORD)(strlen(flags) + 1));
-		RegCloseKey(hKey);
-		printf("[OK] Compatibility flags applied to: %s\n", exePath);
-	}
 }
 
 int LaunchGameWithLocaleEmulator(const char *basePath)
@@ -135,8 +125,6 @@ int LaunchGameWithLocaleEmulator(const char *basePath)
 	printf("[LAUNCHER] Starting LocaleEmulator...\n");
 	printf("[LAUNCHER] LEProc path: %s\n", leprocPath);
 	printf("[LAUNCHER] Garage path: %s\n", garageExePath);
-
-	ApplyCompatibilityFlags(garageExePath);
 
 	// Try ShellExecute
 	HINSTANCE shellexec = ShellExecuteA(NULL, "runas", leprocPath, params, basePath, SW_SHOWNORMAL);
@@ -289,35 +277,57 @@ int InjectDLL(DWORD pid, const char* dllPath)
 	return 1;
 }
 
-// Find all DLLs in current directory
-int FindDLLsInCurrentDir(char dllPaths[MAX_DLLS][MAX_PATH])
+// Find TextTranslator.dll to inject (returns 1 if found, 0 if not, -1 if disabled)
+int FindTextTranslatorDLL(char *outPath)
 {
-	char currentDir[MAX_PATH];
-	GetCurrentDirectoryA(MAX_PATH, currentDir);
-
-	printf("[DEBUG] Current directory: %s\n", currentDir);
-
-	WIN32_FIND_DATAA findData;
-	HANDLE findHandle = FindFirstFileA("*.dll", &findData);
-
-	int count = 0;
-	if (findHandle == INVALID_HANDLE_VALUE)
+	char exePath[MAX_PATH];
+	char exeDir[MAX_PATH];
+	
+	// Check if DLL injection is disabled
+	if (!g_useTranslationEnabled)
 	{
-		fprintf(stderr, "[ERROR] No DLL files found\n");
-		return 0;
+		printf("[INFO] DLL injection disabled (use_old_translation=0)\n");
+		return -1; // Return -1 to indicate disabled, not error
+	}
+	
+	// Get the path of the current executable (GarageDoor.exe)
+	GetModuleFileNameA(NULL, exePath, MAX_PATH);
+	
+	printf("[DEBUG] Full executable path: %s\n", exePath);
+	
+	// Copy to exeDir and remove the filename to get just the directory
+	strncpy(exeDir, exePath, MAX_PATH - 1);
+	exeDir[MAX_PATH - 1] = '\0';
+	
+	char *lastBackslash = strrchr(exeDir, '\\');
+	if (lastBackslash)
+	{
+		*lastBackslash = '\0';
 	}
 
-	do
-	{
-		sprintf(dllPaths[count], "%s\\%s", currentDir, findData.cFileName);
-		printf("[FOUND] %s\n", dllPaths[count]);
-		count++;
-		if (count >= MAX_DLLS)
-			break;
-	} while (FindNextFileA(findHandle, &findData));
+	printf("[DEBUG] Executable directory: %s\n", exeDir);
 
-	FindClose(findHandle);
-	return count;
+	char translatorPath[MAX_PATH];
+	sprintf(translatorPath, "%s\\TextTranslator.dll", exeDir);
+	
+	printf("[DEBUG] Looking for DLL at: %s\n", translatorPath);
+	
+	// Check if TextTranslator.dll exists
+	HANDLE hFile = CreateFileA(translatorPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hFile != INVALID_HANDLE_VALUE)
+	{
+		CloseHandle(hFile);
+		strncpy(outPath, translatorPath, MAX_PATH - 1);
+		outPath[MAX_PATH - 1] = '\0';
+		printf("[FOUND] %s\n", outPath);
+		return 1;
+	}
+	else
+	{
+		DWORD dwError = GetLastError();
+		fprintf(stderr, "[WARNING] TextTranslator.dll not found at: %s (Error: %lu)\n", translatorPath, dwError);
+		return 0; // Return 0 to indicate file not found
+	}
 }
 
 // Check if Japanese locale is properly configured for display
@@ -353,8 +363,8 @@ BOOL CanDisplayJapanese()
 
 int main()
 {
-	// Load debug console configuration first
-	LoadDebugConsoleConfig();
+	// Load configuration settings first
+	LoadConfigSettings();
 	
 	// Show console only if debug_console is enabled in GarageDoor.ini
 	if (g_debugConsoleEnabled)
@@ -410,8 +420,6 @@ int main()
 		DebugPrintf("[LAUNCHER] Launching Garage.exe directly...\n");
 		DebugPrintf("[LAUNCHER] Path: %s\n", garageExePath);
 
-		ApplyCompatibilityFlags(garageExePath);
-
 		STARTUPINFOA si;
 		PROCESS_INFORMATION pi;
 		ZeroMemory(&si, sizeof(si));
@@ -431,56 +439,75 @@ int main()
 		printf("[OK] Garage.exe launched (suspended)\n");
 		Sleep(1000);
 
-		// Now inject DLLs into the suspended process
-		printf("\n[INJECTION] Injecting DLLs into Garage.exe (PID: %lu)...\n", pi.dwProcessId);
+		// Now inject DLL into the suspended process
+		printf("\n[INJECTION] Injecting TextTranslator.dll into Garage.exe (PID: %lu)...\n", pi.dwProcessId);
 
-		// Find all DLLs in current directory
-		char dllPaths[MAX_DLLS][MAX_PATH];
-		int dllCount = FindDLLsInCurrentDir(dllPaths);
-		if (dllCount == 0)
+		// Find and inject DLL
+		char dllPath[MAX_PATH];
+		int findResult = FindTextTranslatorDLL(dllPath);
+		
+		if (findResult == -1)
 		{
-			fprintf(stderr, "[ERROR] No DLL files found in current directory!\n");
+			// DLL injection disabled - just resume and run game
+			printf("\n[RESUMING] Resuming Garage.exe (DLL injection disabled)...\n");
+			ForceResolution640x480(); 
+			ResumeThread(pi.hThread);
+
+
+			// Wait for Garage.exe to finish
+			WaitForSingleObject(pi.hProcess, INFINITE);
+			printf("[INFO] Garage.exe has closed\n");
+
+			CloseHandle(pi.hProcess);
+			CloseHandle(pi.hThread);
+
+			printf("\n========================================\n");
+			printf("[RESULT] Game completed (no DLL injected)\n");
+			printf("========================================\n\n");
+			PauseOrExit();
+			return 0;
+		}
+		else if (findResult == 1)
+		{
+			printf("\n[STARTING INJECTION]\n");
+			if (InjectDLL(pi.dwProcessId, dllPath))
+			{
+				printf("\n[RESUMING] Resuming Garage.exe...\n");
+				ForceResolution640x480(); 
+				ResumeThread(pi.hThread);
+
+				// Wait for Garage.exe to finish
+				WaitForSingleObject(pi.hProcess, INFINITE);
+				printf("[INFO] Garage.exe has closed\n");
+
+				CloseHandle(pi.hProcess);
+				CloseHandle(pi.hThread);
+
+				printf("\n========================================\n");
+				printf("[RESULT] DLL injected successfully\n");
+				printf("========================================\n\n");
+				PauseOrExit();
+				return 0;
+			}
+			else
+			{
+				fprintf(stderr, "[FAILED] Injection failed: %s\n", dllPath);
+				TerminateProcess(pi.hProcess, 1);
+				CloseHandle(pi.hProcess);
+				CloseHandle(pi.hThread);
+				PauseOrExit();
+				return 1;
+			}
+		}
+		else
+		{
+			fprintf(stderr, "[ERROR] TextTranslator.dll not found!\n");
 			TerminateProcess(pi.hProcess, 1);
 			CloseHandle(pi.hProcess);
 			CloseHandle(pi.hThread);
 			PauseOrExit();
 			return 1;
 		}
-
-		// Inject all found DLLs
-		printf("\n[STARTING INJECTION]\n");
-		int successCount = 0;
-		int i;
-		for (i = 0; i < dllCount; i++)
-		{
-			if (InjectDLL(pi.dwProcessId, dllPaths[i]))
-			{
-				successCount++;
-			}
-			else
-			{
-				fprintf(stderr, "[FAILED] %s\n", dllPaths[i]);
-			}
-		}
-
-		// Resume the main thread
-		printf("\n[RESUMING] Resuming Garage.exe...\n");
-		ForceResolution640x480(); 
-		ResumeThread(pi.hThread);
-
-		// Aspetta che Garage.exe termini
-		WaitForSingleObject(pi.hProcess, INFINITE);
-		printf("[INFO] Garage.exe has closed\n");
-
-		CloseHandle(pi.hProcess);
-		CloseHandle(pi.hThread);
-
-		printf("\n========================================\n");
-		printf("[RESULT] %d/%d DLLs injected successfully\n", successCount, dllCount);
-		printf("========================================\n\n");
-
-		PauseOrExit();
-		return 0;
 	}
 
 	printf("[INFO] Windows version other than XP detected - proceeding with LocaleEmulator and injection...\n\n");
@@ -522,7 +549,7 @@ int main()
 	printf("\n[WAITING] Giving game time to start...\n");
 	Sleep(3000);
 
-	// Search for Garage.exe and inject DLLs
+	// Search for Garage.exe and inject DLL
 	printf("\n[INJECTION] Looking for Garage.exe...\n");
 	DWORD pid = FindProcessByName("Garage.exe");
 	if (pid == 0)
@@ -533,36 +560,42 @@ int main()
 		return 1;
 	}
 
-	// Find all DLLs in current directory
-	char dllPaths[MAX_DLLS][MAX_PATH];
-	int dllCount = FindDLLsInCurrentDir(dllPaths);
-	if (dllCount == 0)
+	// Find and inject DLL
+	char dllPath[MAX_PATH];
+	int findResult = FindTextTranslatorDLL(dllPath);
+	
+	if (findResult == -1)
 	{
-		fprintf(stderr, "[ERROR] No DLL files found in current directory!\n");
+		// DLL injection disabled - game is already running, no injection needed
+		printf("\n[INFO] DLL injection disabled, game is running without translation\n");
+		printf("\n========================================\n");
+		printf("[RESULT] Game completed (no DLL injected)\n");
+		printf("========================================\n\n");
 		PauseOrExit();
-		return 1;
+		return 0;
 	}
-
-	// Inject all found DLLs
-	printf("\n[STARTING INJECTION]\n");
-	int successCount = 0;
-	int i;
-	for (i = 0; i < dllCount; i++)
+	else if (findResult == 1)
 	{
-		if (InjectDLL(pid, dllPaths[i]))
+		printf("\n[STARTING INJECTION]\n");
+		if (InjectDLL(pid, dllPath))
 		{
-			successCount++;
+			printf("\n========================================\n");
+			printf("[RESULT] DLL injected successfully\n");
+			printf("========================================\n\n");
+			PauseOrExit();
+			return 0;
 		}
 		else
 		{
-			fprintf(stderr, "[FAILED] %s\n", dllPaths[i]);
+			fprintf(stderr, "[FAILED] Injection failed: %s\n", dllPath);
+			PauseOrExit();
+			return 1;
 		}
 	}
-
-	printf("\n========================================\n");
-	printf("[RESULT] %d/%d DLLs injected successfully\n", successCount, dllCount);
-	printf("========================================\n\n");
-
-	PauseOrExit();
-	return 0;
+	else
+	{
+		fprintf(stderr, "[ERROR] TextTranslator.dll not found!\n");
+		PauseOrExit();
+		return 1;
+	}
 }

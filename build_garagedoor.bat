@@ -17,25 +17,21 @@ echo ===============================
 
 if not exist "%GCC%" (
   echo ERROR: compiler not found at "%GCC%"
-  pause
   exit /b 1
 )
 
 if not exist "%WINDRES%" (
   echo ERROR: windres not found at "%WINDRES%"
-  pause
   exit /b 1
 )
 
 if not exist "%SRC%" (
   echo ERROR: source %SRC% not found in %CD%
-  pause
   exit /b 1
 )
 
 if not exist "%RC%" (
   echo ERROR: resources %RC% not found in %CD%
-  pause
   exit /b 1
 )
 
@@ -46,7 +42,6 @@ set "RCERR=%ERRORLEVEL%"
 echo resource compilation exit code: %RCERR%
 if %RCERR% neq 0 (
   echo ERROR: resource compilation failed
-  pause
   exit /b %RCERR%
 )
 
@@ -57,7 +52,6 @@ set "CCERR=%ERRORLEVEL%"
 echo compile exit code: %CCERR%
 if %CCERR% neq 0 (
   echo ERROR: compilation failed
-  pause
   exit /b %CCERR%
 )
 
@@ -65,10 +59,8 @@ if exist "%OUTDIR%\%OUT%" (
   echo(
   echo SUCCESS: created "%OUTDIR%\%OUT%"
   dir "%OUTDIR%\%OUT%"
-  pause
   exit /b 0
 ) else (
   echo ERROR: "%OUTDIR%\%OUT%" not found after compilation.
-  pause
   exit /b 1
 )

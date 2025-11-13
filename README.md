@@ -59,11 +59,78 @@ You need the following xtras:
 - `MIX32.X32`
 - `budapi.x32`
 
+## Translating Game Texts
+
+- To extract the original texts use [DirectorCastRipper](https://github.com/n0samu/DirectorCastRipper)
+- Select all the files that are inside `dir_data`
+- Enable `TXT` under `Export Formats`
+- Copy the contents of the `Exports` folder to the `dir_data/patch/` folder
+- Delete any text file that you do not need to translate or edit
+- Delete all `.csv` files (they are useless)
+
+Copy and paste the script `fix_txts.py` into the `Exports` folder and run it (RUN IT ONLY ONE TIME!) with `python fix_txts.py`.
+
+Edit your files using [Sakura](https://github.com/sakura-editor/sakura/releases).\
+DO NOT USE VSCODE or other editors! They break the encoding even if you select SJIS correctly, for some reason.
+
+On Sakura double click on the bottom `UTF-8` and select `SJIS`.
+
+Save your file.
+
+### FAQ
+
+#### Warnings on saving
+
+Press YES/NO if you get this warning on saving, it's not important: 
+```
+改行コードが混在しています。
+現在の入力改行コード CR に統一しますか？
+```
+
+Press YES if you get this warning on saving:
+```
+文字エンコード SJIS で保存しようとしていますが、
+文字コード変換により一部の文字情報が失われます。
+保存処理を続行しますか？
+最初の場所 13行 52桁 文字[—]U+2014
+キャンセル=該当位置に移動
+```
+
+#### Special texts files rules
+
+When editing do not copy and paste a whole auto translated content. 
+Copy and paste only the text sections to avoid messing up with the important script characters used by the game
+to handle the game logic. 
+
+Make sure to always have `←` at the end of lines and not `↓`.
+
+Use `@` to separate dialogues into different boxes. Do not use the small @ which is different (cannot display it here).\
+Example:
+```
+Your adaptation level has dropped. You should fix that soon.
+You’d better go to the Adjustment Clinic.＠
+There’s a sign in front of your house that says “Outer Loop Entrance,” right?
+```
+
+Each dialog box supports only 4 lines.
+
+Do not exceed the top line length otherwise messages would start a new line but (game bug) would have little distance from the top line.\
+Use this as reference (max length: ~53 characters):\
+`-- --------------------------------------------------`.
+
+Do not translate or edit texts after `#` and `~` as they are special tags used by the game.\
+Example: `#Index 'オープニング 02'`
+
+You can edit texts after `--`, these are comments used as reference for future readers and are useful to understand where the dialogue happens and who is talking.\
+Example: `-- ----------オープニング----------`
+
+If you see blank boxes, you probably made a mistake on saving, the encoding is broken or something else. Get a clean file from the game and re-do your translation.
+
 ## Translating Game Images
 
-- To extract the original images use [DirectorCastRipper](https://github.com/n0samu/DirectorCastRipper) and enable `BMP export`.
-- Copy the contents of the `Exports` folder to the `dir_data/patch/` folder.
-- Delete any images that you do not need to translate or edit.
+- Same steps as the `TXT` export, but select `BMP`
+- Delete any images that you do not need to translate or edit
+- Delete all `.csv` files (they are useless)
 
 ## Saving Edited Images
 
