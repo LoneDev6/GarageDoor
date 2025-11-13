@@ -59,7 +59,9 @@ You need the following xtras:
 - `MIX32.X32`
 - `budapi.x32`
 
-## Translating Game Texts
+# Translating the game
+
+## Translating Texts
 
 - To extract the original texts use [DirectorCastRipper](https://github.com/n0samu/DirectorCastRipper)
 - Select all the files that are inside `dir_data`
@@ -68,7 +70,8 @@ You need the following xtras:
 - Delete any text file that you do not need to translate or edit
 - Delete all `.csv` files (they are useless)
 
-Copy and paste the script `fix_txts.py` into the `Exports` folder and run it (RUN IT ONLY ONE TIME!) with `python fix_txts.py`.
+Copy and paste the script `fix_txts.py` into the `Exports` folder and run it (RUN IT ONLY ONE TIME!) with `python fix_txts.py`.\
+Copy and paste the BAT `fix_txts.bat` into the `Exports` folder and run it (RUN IT ONLY ONE TIME!).
 
 Edit your files using [Sakura](https://github.com/sakura-editor/sakura/releases).\
 DO NOT USE VSCODE or other editors! They break the encoding even if you select SJIS correctly, for some reason.
@@ -126,13 +129,13 @@ Example: `-- ----------オープニング----------`
 
 If you see blank boxes, you probably made a mistake on saving, the encoding is broken or something else. Get a clean file from the game and re-do your translation.
 
-## Translating Game Images
+## Translating Images
 
 - Same steps as the `TXT` export, but select `BMP`
 - Delete any images that you do not need to translate or edit
 - Delete all `.csv` files (they are useless)
 
-## Saving Edited Images
+### Saving Edited Images
 
 You can edit images with any editor. If the game fails to recognize your BMP files or crashes, try one of these solutions:
 

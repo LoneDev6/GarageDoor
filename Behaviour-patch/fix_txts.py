@@ -74,25 +74,11 @@ def recover_file(path):
     print(f"Fixed: {path}")
 
 
-def convert_utf8_to_sjis(path):
-    """Convert UTF-8 encoded file to Shift-JIS (cp932)."""
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            text = f.read()
-        
-        with open(path, "w", encoding="cp932") as f:
-            f.write(text)
-        
-        print(f"Converted to SJIS: {path}")
-    except Exception as e:
-        print(f"Error converting {path}: {e}")
-
 
 # Confirm before proceeding
 print("This script will:")
 print("1. Create a backup")
-print("2. Recover from mojibake (UTF-8 → Shift-JIS)")
-print("3. Convert UTF-8 to Shift-JIS")
+print("2. Recover from mojibake (UTF-8)")
 confirm = input("Continue? (y/N): ").strip().lower()
 
 if confirm != "y":
@@ -115,6 +101,5 @@ for root, dirs, files in os.walk("."):
             path = os.path.join(root, name)
             backup_file(path)
             recover_file(path)
-            convert_utf8_to_sjis(path)
 
 print(f"\nBackup saved in: {BACKUP_DIR}")
