@@ -61,6 +61,8 @@ You need the following xtras:
 - `budapi.x32`
 
 # Translating the game
+Here is the current progress and history of the game's asset translation: [Garage-Bad-Dream-Adventure-English-Assets](https://github.com/LoneDev6/Garage-Bad-Dream-Adventure-English-Assets).  
+You can contribute directly to that repository by submitting your edits. Please ensure you follow the guidelines outlined below.
 
 ## Translating Texts
 
