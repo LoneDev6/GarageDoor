@@ -17,6 +17,12 @@ on delayedPatching
   listLoadedCasts()
   applyAllPatches(the moviePath & "patch\\")
   logMsg("--- All patching complete ---")
+  
+  -- Added the unused song into the home room
+  if the movieName = "home.dir" or the movieName = "home.dcr" then
+    puppetSound(1, "051(刻印石の洞窟)")
+    set the volume of sound 1 to 255
+  end if
 end
 
 
