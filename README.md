@@ -10,6 +10,7 @@ This was tested on **Windows XP** and **Windows 11**, but it should work on all 
 - Translate game texts at runtime
 - Dump game texts to a file at runtime
 - Replace game images at runtime
+- Enables playback of the previously unused song featured in the Android port
 
 # 💿 How to install the original game
 
