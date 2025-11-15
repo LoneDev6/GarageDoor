@@ -65,39 +65,31 @@ int _stdcall TextOutA_Detour(HDC hdc, int x, int y, LPCSTR lpString, int length_
 	// if it's an ignorable text (in this case a text with only numbers)
 	if (!translator.isIgnorable(lpString))
 	{
-		// If I've never seen this text before
-		if (!translator.hasTranslation(lpString))
+		std::string translated = translator.getTranslation(lpString);
+		
+		// If translation is empty or marked as not translated
+		if (translated.empty() || translated.compare("NOT_TRANSLATED_TEXT") == 0)
 		{
-			if (g_translatorMode)
+			if (g_translatorMode && translated.empty())
 			{
 				std::cout << "[!] Unknown text found: :" << lpString << "\n";
 				translator.saveUnknownText(lpString, "NOT_TRANSLATED_TEXT");
 			}
+			if (g_debugConsole && translated.compare("NOT_TRANSLATED_TEXT") == 0)
+			{
+				std::cout << "[NO] Message not translated: " << lpString << "\n";
+			}
+			// Use original text - NOT translated version
 			return TextOutA_Original(hdc, x, y, lpString, length_lpString);
 		}
-		else // I know about this text
+		else // I have a translation for this text
 		{
-			std::string translated = translator.getTranslation(lpString);
-
-			// I already have this text saved but I don't have a translation
-			if (translated.compare("NOT_TRANSLATED_TEXT") == 0)
+			if (g_debugConsole)
 			{
-				if (g_debugConsole)
-				{
-					std::cout << "[NO] Message not translated: " << lpString << "\n";
-				}
-				// Use original text - NOT translated version
-				return TextOutA_Original(hdc, x, y, lpString, length_lpString);
+				std::cout << "[OK] Translated message: " << lpString << " -> " << translated.c_str() << "\n";
 			}
-			else // I have a translation for this text
-			{
-				if (g_debugConsole)
-				{
-					std::cout << "[OK] Translated message: " << lpString << " -> " << translated.c_str() << "\n";
-				}
-				// Use translated text
-				return TextOutA_Original(hdc, x, y, translated.c_str(), translated.length());
-			}
+			// Use translated text
+			return TextOutA_Original(hdc, x, y, translated.c_str(), translated.length());
 		}
 	}
 	else // Ignore the text and pass the same value to the original function

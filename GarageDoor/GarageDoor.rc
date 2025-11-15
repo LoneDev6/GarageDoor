@@ -1,3 +1,30 @@
 IDI_ICON1 ICON "icon.ico"
 
 1 24 "Garage.exe.manifest.xml"
+
+1 VERSIONINFO
+  FILEVERSION 2,0
+  PRODUCTVERSION 2,0
+  FILEOS 0x40004
+  FILETYPE 0x1
+
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "FileVersion", "2.0"
+            VALUE "ProductVersion", "2.0"
+            VALUE "CompanyName", "LoneDev"
+            VALUE "FileDescription", "GarageDoor Launcher and Injector 2025"
+            VALUE "LegalCopyright", "(C) 2025 LoneDev"
+            VALUE "InternalName", "GarageDoor"
+            VALUE "OriginalFilename", "GarageDoor.exe"
+            VALUE "ProductName", "GarageDoor"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1252
+    END
+END

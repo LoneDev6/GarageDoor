@@ -115,9 +115,11 @@ on patchInternalCast movieName, castIndex, castName, basePath
   end if
 end
 
+
 -----------------------------------------------
--- REPLACEMENT LOGIC
+-- REPLACEMENT HELPERS
 -----------------------------------------------
+
 on replaceBitmap bitmapMember, bitmapFileName
   if the type of bitmapMember <> #bitmap then exit
   
@@ -141,46 +143,48 @@ on replaceBitmap bitmapMember, bitmapFileName
 end
 
 on replaceField fieldMember, textFileName
-  set t = the type of fieldMember
-  if t <> #field and t <> #text then exit
-
-  if baFileExists(textFileName) = 0 then
-    logMsg("File not found: " & textFileName)
-    exit
-  end if
-
   set f = new(xtra "FileIO")
   openFile(f, textFileName, 1)
-
-  if status(f) <> 0 then
-    logMsg("Error opening file: " & error(f, status(f)))
-    closeFile(f)
-    exit
-  end if
-
   set textContent = readFile(f)
   closeFile(f)
-
-  if voidp(textContent) or textContent = EMPTY then
-    logMsg("File is empty or unreadable: " & textFileName)
-    exit
-  end if
-
-  -- Clean and overwrite without recreating
-  -- TODO not sure if all of this is needed, probably only text is enough
-  set the text of fieldMember = EMPTY
-  set the editable of fieldMember = FALSE
-  set the textFont of fieldMember = "MS Gothic"
-  set the textSize of fieldMember = 12
-  set the textStyle of fieldMember = "plain"
-  set the foreColor of fieldMember = 0
-  set the backColor of fieldMember = 255
-  set the text of fieldMember = textContent
-
-  -- Not sure if needed to be honest, TODO test if it works without that
-  updateStage
-  puppetPalette 0
-  updateStage
+  
+  if voidp(textContent) or textContent = EMPTY then exit
+  
+  set fixedText = ""
+  set i = 1
+  set len = the number of chars in textContent
+  
+  repeat while i <= len
+    set c = char i of textContent
+    
+    if c = numToChar(13) then
+      -- CR, keep it
+      put c after fixedText
+      
+      -- If LF after CR, skip it
+      if i < len then
+        if char (i+1) of textContent = numToChar(10) then
+          set i = i + 1
+        end if
+      end if
+    
+    else if c = numToChar(10) then
+      -- LF alone → CR
+      put numToChar(13) after fixedText
+    
+      -- Replace ASCII @ with full-width ＠
+    else if c = "@" then
+      put "＠" after fixedText
+    
+    else
+      -- Normal character
+      put c after fixedText
+    end if
+    
+    set i = i + 1
+  end repeat
+  
+  set the text of fieldMember = fixedText
 end
 
 -----------------------------------------------

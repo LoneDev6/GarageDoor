@@ -1,4 +1,3 @@
-# fix_sjis_cp1252_inverse_backup.py
 # Recovers Japanese text from mojibake like "ƒ_ƒ~[F..."
 # Also converts UTF-8 to Shift-JIS (SJIS)
 # Works recursively on subfolders, creates backups, and overwrites files in place
@@ -41,17 +40,14 @@ inv_cp1252 = {
     0x0178: 0x9F,  # Ÿ
 }
 
-def backup_file(src_path):
-    """Copy the file to the backup structure, preserving subfolders."""
+def convert_file(src_path, dest_dir):
+    """Convert mojibake file to Shift-JIS with CR line endings in destination folder."""
+    # Create same folder structure in destination
     rel_path = os.path.relpath(src_path, ".")
-    backup_path = os.path.join(BACKUP_DIR, rel_path)
-    os.makedirs(os.path.dirname(backup_path), exist_ok=True)
-    shutil.copy2(src_path, backup_path)
-
-
-def recover_file(path):
-    """Convert mojibake file to readable UTF-8."""
-    with open(path, "rb") as f:
+    dest_path = os.path.join(dest_dir, rel_path)
+    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+    
+    with open(src_path, "rb") as f:
         data = f.read()
 
     text = data.decode("utf-8", errors="ignore")
@@ -68,38 +64,44 @@ def recover_file(path):
 
     recovered = out_bytes.decode("cp932", errors="ignore")
 
-    with open(path, "w", encoding="utf-8", newline="") as f:
-        f.write(recovered)
+    # Convert line endings to CR only (Macintosh)
+    recovered = recovered.replace('\r\n', '\n')  # CRLF -> LF
+    recovered = recovered.replace('\r', '\n')    # CR -> LF
+    recovered = recovered.replace('\n', '\r')    # LF -> CR
 
-    print(f"Fixed: {path}")
+    # Convert to Shift-JIS and write to destination
+    with open(dest_path, "wb") as f:
+        f.write(recovered.encode("shift_jis", errors="replace"))
+
+    print(f"Converted: {src_path} -> {dest_path}")
 
 
 
 # Confirm before proceeding
 print("This script will:")
-print("1. Create a backup")
-print("2. Recover from mojibake (UTF-8)")
+print("1. Create a 'converted-DATE-TIME' folder")
+print("2. Recover from mojibake and convert to Shift-JIS (CR line endings)")
+print("3. Leave original files untouched")
 confirm = input("Continue? (y/N): ").strip().lower()
 
 if confirm != "y":
     print("Cancelled.")
     exit()
 
-# Create unique backup folder
+# Create unique converted folder
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-BACKUP_DIR = f"backup_{timestamp}"
-os.makedirs(BACKUP_DIR, exist_ok=True)
+CONVERTED_DIR = f"converted-{timestamp}"
+os.makedirs(CONVERTED_DIR, exist_ok=True)
 
 # Recursive scan
 for root, dirs, files in os.walk("."):
-    # Skip backup folders
-    dirs[:] = [d for d in dirs if not d.startswith("backup")]
+    # Skip converted folders
+    dirs[:] = [d for d in dirs if not d.startswith("converted-")]
     
     for name in files:
         ext = os.path.splitext(name)[1].lower()
         if ext in VALID_EXT:
             path = os.path.join(root, name)
-            backup_file(path)
-            recover_file(path)
+            convert_file(path, CONVERTED_DIR)
 
-print(f"\nBackup saved in: {BACKUP_DIR}")
+print(f"\nConverted files saved in: {CONVERTED_DIR}")

@@ -66,48 +66,24 @@ You need the following xtras:
 - To extract the original texts use [DirectorCastRipper](https://github.com/n0samu/DirectorCastRipper)
 - Select all the files that are inside `dir_data`
 - Enable `TXT` under `Export Formats`
-- Copy the contents of the `Exports` folder to the `dir_data/patch/` folder
 - Delete any text file that you do not need to translate or edit
-- Delete all `.csv` files (they are useless)
+- Copy and paste the `delete_all_csv.bat` and run it from the `Exports` folder
+- Copy the contents of the `Exports` folder to the `dir_data/patch/` folder
 
-Copy and paste the script `fix_txts.py` into the `Exports` folder and run it (RUN IT ONLY ONE TIME!) with `python fix_txts.py`.\
-Copy and paste the BAT `fix_txts.bat` into the `Exports` folder and run it (RUN IT ONLY ONE TIME!).
+Copy and paste the script `fix_cast_ripper_txts.py` and `fix_cast_ripper_txts.bat` into the `Exports` folder and run `fix_cast_ripper_txts.bat` (RUN IT ONLY ONE TIME!).\
+This script is used to make the txt readable and editable.
 
-Edit your files using [Sakura](https://github.com/sakura-editor/sakura/releases).\
-DO NOT USE VSCODE or other editors! They break the encoding even if you select SJIS correctly, for some reason.
-
-On Sakura double click on the bottom `UTF-8` and select `SJIS`.
+When editing files via Notepad++ or VSCode, on the bottom right, make sure you see `SHIFT-JIS`.
 
 Save your file.
 
+NOTE: Some texts are translated using the `tranlation.ini` file, in case some were hardcoded in the game code and were unreplaceable editing the `.txt` files (for example items obtainment and usage messages).
+
 ### FAQ
-
-#### Warnings on saving
-
-Press YES/NO if you get this warning on saving, it's not important: 
-```
-改行コードが混在しています。
-現在の入力改行コード CR に統一しますか？
-```
-
-Press YES if you get this warning on saving:
-```
-文字エンコード SJIS で保存しようとしていますが、
-文字コード変換により一部の文字情報が失われます。
-保存処理を続行しますか？
-最初の場所 13行 52桁 文字[—]U+2014
-キャンセル=該当位置に移動
-```
 
 #### Special texts files rules
 
-When editing do not copy and paste a whole auto translated content. 
-Copy and paste only the text sections to avoid messing up with the important script characters used by the game
-to handle the game logic. 
-
-Make sure to always have `←` at the end of lines and not `↓`.
-
-Use `@` to separate dialogues into different boxes. Do not use the small @ which is different (cannot display it here).\
+Use `＠` to separate dialogues into different boxes.\
 Example:
 ```
 Your adaptation level has dropped. You should fix that soon.
@@ -132,8 +108,9 @@ If you see blank boxes, you probably made a mistake on saving, the encoding is b
 ## Translating Images
 
 - Same steps as the `TXT` export, but select `BMP`
-- Delete any images that you do not need to translate or edit
-- Delete all `.csv` files (they are useless)
+- Delete any text file that you do not need to translate or edit
+- Copy and paste the `delete_all_csv.bat` and run it from the `Exports` folder
+- Copy the contents of the `Exports` folder to the `dir_data/patch/` folder
 
 ### Saving Edited Images
 

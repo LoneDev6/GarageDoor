@@ -12,7 +12,7 @@ Garage English Patch - Launcher & Injector (C version for XP compatibility)
 #include <stdarg.h>
 
 BOOL g_debugConsoleEnabled = FALSE;
-BOOL g_useTranslationEnabled = TRUE;
+BOOL g_lowResolutionMode = TRUE;
 
 // Helper macro to pause or exit based on debug console setting
 #define PauseOrExit() do { \
@@ -32,15 +32,13 @@ void LoadConfigSettings()
 	DWORD success = GetPrivateProfileStringA("Settings", "debug_console", "0", result, sizeof(result), ".\\GarageDoor.ini");
 	g_debugConsoleEnabled = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
 	
-	// Load translation DLL injection setting
-	ZeroMemory(result, sizeof(result));
-	success = GetPrivateProfileStringA("Settings", "use_old_translation", "1", result, sizeof(result), ".\\GarageDoor.ini");
-	g_useTranslationEnabled = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
+	// Load low resolution mode setting
+	success = GetPrivateProfileStringA("Settings", "low_resolution_mode", "0", result, sizeof(result), ".\\GarageDoor.ini");
+	g_lowResolutionMode = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
 	
 	if (g_debugConsoleEnabled)
 	{
 		printf("[CONFIG] debug_console: %s\n", g_debugConsoleEnabled ? "enabled" : "disabled");
-		printf("[CONFIG] use_old_translation: %s\n", g_useTranslationEnabled ? "enabled" : "disabled");
 	}
 }
 
@@ -283,13 +281,6 @@ int FindTextTranslatorDLL(char *outPath)
 	char exePath[MAX_PATH];
 	char exeDir[MAX_PATH];
 	
-	// Check if DLL injection is disabled
-	if (!g_useTranslationEnabled)
-	{
-		printf("[INFO] DLL injection disabled (use_old_translation=0)\n");
-		return -1; // Return -1 to indicate disabled, not error
-	}
-	
 	// Get the path of the current executable (GarageDoor.exe)
 	GetModuleFileNameA(NULL, exePath, MAX_PATH);
 	
@@ -450,7 +441,8 @@ int main()
 		{
 			// DLL injection disabled - just resume and run game
 			printf("\n[RESUMING] Resuming Garage.exe (DLL injection disabled)...\n");
-			ForceResolution640x480(); 
+			if(g_lowResolutionMode)
+				ForceResolution640x480(); 
 			ResumeThread(pi.hThread);
 
 
@@ -473,7 +465,8 @@ int main()
 			if (InjectDLL(pi.dwProcessId, dllPath))
 			{
 				printf("\n[RESUMING] Resuming Garage.exe...\n");
-				ForceResolution640x480(); 
+				if(g_lowResolutionMode)
+					ForceResolution640x480(); 
 				ResumeThread(pi.hThread);
 
 				// Wait for Garage.exe to finish

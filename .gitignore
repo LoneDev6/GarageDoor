@@ -3,3 +3,5 @@ mingw32/
 out/
 *.o
 *.txt
+translation.ini
+fishes.ini
