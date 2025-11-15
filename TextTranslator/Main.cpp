@@ -34,13 +34,14 @@ bool g_debugConsole = false;
 
 void LoadConfig()
 {
-	char result[256] = "";
-	DWORD success = GetPrivateProfileStringA("Settings", "translator_mode", "0", result, sizeof(result), ".\\GarageDoor.ini");
-	g_translatorMode = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
-	
-	success = GetPrivateProfileStringA("Settings", "debug_console", "0", result, sizeof(result), ".\\GarageDoor.ini");
-	g_debugConsole = (strcmp(result, "1") == 0 || strcmp(result, "true") == 0);
-	
+	char translatorModeResult[256] = "";
+	DWORD success = GetPrivateProfileStringA("Settings", "translator_mode", "0", translatorModeResult, sizeof(translatorModeResult), ".\\GarageDoor.ini");
+	g_translatorMode = (strcmp(translatorModeResult, "1") == 0 || strcmp(translatorModeResult, "true") == 0);
+
+	char debugConsoleResult[256] = "";
+	success = GetPrivateProfileStringA("Settings", "debug_console", "0", debugConsoleResult, sizeof(debugConsoleResult), ".\\GarageDoor.ini");
+	g_debugConsole = (strcmp(debugConsoleResult, "1") == 0 || strcmp(debugConsoleResult, "true") == 0);
+
 	if (g_debugConsole)
 	{
 		std::cout << "[CONFIG] translator_mode=" << (g_translatorMode ? "1" : "0") << "\n";
@@ -202,12 +203,10 @@ static unsigned long __stdcall CheatMain(void *arg)
 	if (g_debugConsole)
 	{
 		AllocConsole();
-		ShowWindow(GetConsoleWindow(), SW_NORMAL);
 		freopen("CONIN$", "r", stdin);
 		freopen("CONOUT$", "w", stdout);
 		SetConsoleTitleA("Garage Dev Console - by LoneDev (github.com/LoneDev6)");
 
-		::SetWindowPos(GetConsoleWindow(), HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 		::ShowWindow(GetConsoleWindow(), SW_NORMAL);
 		
 		std::cout << "[DEBUG] CheatMain thread started\n";
