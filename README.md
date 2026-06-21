@@ -1,6 +1,6 @@
 # GarageDoor
 
-First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  ｢ガラージュ｣](https://lostmediaarchive.fandom.com/wiki/Garage:_Bad_Dream_Adventure_(Limited_Release_1999_Japanese_Point-and-Click_Game) "GARAGE: Bad Dream Adventure  ｢ガラージュ｣").\
+First translation hack for the Japanese videogame [GARAGE: Bad Dream Adventure  ｢ガラージュ｣](https://lostmediaarchive.fandom.com/wiki/Garage:_Bad_Dream_Adventure_(Found_Limited_Release_1999_Japanese_Point-and-Click_Game)).\
 Allows launch on modern and old non-Japanese Windows systems while applying necessary compatibility settings, injecting translation DLLs and patching images at runtime.
 
 This was tested on **Windows XP** and **Windows 11**, but it should work on all other versions after **Windows XP** as well.
